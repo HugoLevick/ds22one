@@ -91,7 +91,7 @@ class Base {
 }
 
 // CREAR BASE
-const base = new Base(5);
+const base = new Base(3);
 
 console.log(base.toString());
 
