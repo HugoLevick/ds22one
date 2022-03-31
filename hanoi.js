@@ -44,15 +44,20 @@ class Tower {
 
 class Base {
   //Clase Base, parametros: primera torre
-  constructor(tower1 = new Tower([3, 2, 1])) {
-    this.towers = [tower1, new Tower(), new Tower()];
-    this.height = tower1.items.length;
+  constructor(height = 3) {
+    this.towers = [new Tower(), new Tower(), new Tower()];
+    for (let i = height; i > 0; i--) this.towers[0].push(i);
+    this.height = height;
   }
 
   move(startTower, endTower) {
     //Mueve los anillos de una torre a otra si es posible
     //Si la ultima posicion de la primera torre es menor a la ultima de la torre destino
-    if (this.towers[startTower - 1].peek() < (this.towers[endTower - 1].peek() ?? this.towers[startTower - 1].peek() + 1)) {
+    if (
+      this.towers[startTower - 1].peek() <
+      (this.towers[endTower - 1].peek() ??
+        this.towers[startTower - 1].peek() + 1)
+    ) {
       this.towers[endTower - 1].push(this.towers[startTower - 1].pop());
       return true;
     }
@@ -74,16 +79,6 @@ class Base {
   }
 }
 
-const base = new Base(new Tower([3, 2, 1]));
-const n = base.towerHeight();
-const movimientos = Math.pow(2, n) - 1;
-
-console.log(base.toString());
-
-// ALGORITMO //
-
-hanoi(n, 1, 3, 2);
-
 function hanoi(n, ori, des, aux) {
   if (n == 1) {
     base.move(ori, des);
@@ -95,4 +90,14 @@ function hanoi(n, ori, des, aux) {
     hanoi(n - 1, aux, des, ori);
   }
 }
+
+// CREAR BASE
+const base = new Base(3);
+
+console.log(base.toString());
+
+// ALGORITMO //
+const n = base.towerHeight();
+const movimientos = Math.pow(2, n) - 1;
+hanoi(n, 1, 3, 2);
 console.log("Total de movimientos: " + movimientos);
