@@ -43,7 +43,7 @@ class Tower {
 }
 
 class Base {
-  //Clase Base, parametros: primera torre
+  //Clase Base, parametros: numero de ruedas
   constructor(height = 3) {
     this.towers = [new Tower(), new Tower(), new Tower()];
     for (let i = height; i > 0; i--) this.towers[0].push(i);
