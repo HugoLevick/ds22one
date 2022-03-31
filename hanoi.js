@@ -74,30 +74,28 @@ class Base {
     cadena += "-\t-\t-\nT1\tT2\tT3\n";
     return cadena;
   }
+  solve(n = this.height, ori = 1, des = 3, aux = 2) {
+    if (n == 1) {
+      base.move(ori, des);
+      console.log(base.toString(`Se movio de T${ori} a T${des}`));
+    } else {
+      this.solve(n - 1, ori, aux, des);
+      this.move(ori, des);
+      console.log(base.toString(`Se movio de T${ori} a T${des}`));
+      this.solve(n - 1, aux, des, ori);
+    }
+  }
   towerHeight() {
     return this.height;
   }
 }
 
-function hanoi(n, ori, des, aux) {
-  if (n == 1) {
-    base.move(ori, des);
-    console.log(base.toString(`Se movio de T${ori} a T${des}`));
-  } else {
-    hanoi(n - 1, ori, aux, des);
-    base.move(ori, des);
-    console.log(base.toString(`Se movio de T${ori} a T${des}`));
-    hanoi(n - 1, aux, des, ori);
-  }
-}
-
 // CREAR BASE
-const base = new Base(3);
+const base = new Base(5);
 
 console.log(base.toString());
 
 // ALGORITMO //
-const n = base.towerHeight();
-const movimientos = Math.pow(2, n) - 1;
-hanoi(n, 1, 3, 2);
+base.solve();
+const movimientos = Math.pow(2, base.height) - 1;
 console.log("Total de movimientos: " + movimientos);
