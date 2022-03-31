@@ -43,54 +43,56 @@ class Tower {
 }
 
 class Base {
-  //Clase Base, parametros: tres torres
-  constructor(
-    tower1 = new Tower(),
-    tower2 = new Tower(),
-    tower3 = new Tower()
-  ) {
-    this.towers = [tower1, tower2, tower3];
+  //Clase Base, parametros: primera torre
+  constructor(tower1 = new Tower([3, 2, 1])) {
+    this.towers = [tower1, new Tower(), new Tower()];
+    this.height = tower1.items.length;
   }
 
   move(startTower, endTower) {
     //Mueve los anillos de una torre a otra si es posible
-    if (
-      //Si la ultima posicion de la primera torre es menor a la ultima de la torre destino
-      this.towers[startTower - 1].peek() <
-      (this.towers[endTower - 1].peek() ??
-        this.towers[startTower - 1].peek() + 1)
-    ) {
+    //Si la ultima posicion de la primera torre es menor a la ultima de la torre destino
+    if (this.towers[startTower - 1].peek() < (this.towers[endTower - 1].peek() ?? this.towers[startTower - 1].peek() + 1)) {
       this.towers[endTower - 1].push(this.towers[startTower - 1].pop());
       return true;
     }
-
     return false;
   }
-  toString() {
+  toString(mensaje = "TORRES") {
     //Convierte los valores de las torres en string
-    let cadena = "------TORRES------\n\n";
-    for (let i = this.towers.length - 1; i >= 0; i--) {
+    let cadena = `------${mensaje}------\n\n`;
+    for (let i = this.height - 1; i >= 0; i--) {
       for (let j = 0; j < this.towers.length; j++)
         cadena += (this.towers[j].items[i] ?? "|") + "\t";
       cadena += "\n";
     }
-
     cadena += "-\t-\t-\nT1\tT2\tT3\n";
-
     return cadena;
+  }
+  towerHeight() {
+    return this.height;
   }
 }
 
 const base = new Base(new Tower([3, 2, 1]));
+const n = base.towerHeight();
+const movimientos = Math.pow(2, n) - 1;
 
 console.log(base.toString());
 
-base.move(1, 3);
-base.move(1, 2);
-base.move(3, 2);
-base.move(1, 3);
-base.move(2, 1);
-base.move(2, 3);
-base.move(1, 3);
+// ALGORITMO //
 
-console.log(base.toString());
+hanoi(n, 1, 3, 2);
+
+function hanoi(n, ori, des, aux) {
+  if (n == 1) {
+    base.move(ori, des);
+    console.log(base.toString(`Se movio de T${ori} a T${des}`));
+  } else {
+    hanoi(n - 1, ori, aux, des);
+    base.move(ori, des);
+    console.log(base.toString(`Se movio de T${ori} a T${des}`));
+    hanoi(n - 1, aux, des, ori);
+  }
+}
+console.log("Total de movimientos: " + movimientos);
