@@ -93,7 +93,7 @@ class Queue {
       secondToLast.next = null;
       return last.data;
     } else if (this.front) {
-      let data = this.front.data;
+      let data = this.front;
       this.empty();
       return data;
     } else return null;
@@ -101,13 +101,13 @@ class Queue {
 
   toString() {
     let str = "";
-    let node = this.front;
-    let back = this.back;
+    let node = this.list.getFirst();
+    let back = this.list.getLast();
     while (node) {
       str += `${node.data}${back == node ? "." : ", "}`;
       node = node.next;
     }
-    return str;
+    return str ? str : null;
   }
 
   empty() {
@@ -115,7 +115,8 @@ class Queue {
   }
 
   get front() {
-    return this.list.getFirst();
+    let first = this.list.getFirst();
+    return first ? first.data : null;
   }
 
   get back() {
@@ -134,4 +135,8 @@ let queue = new Queue(list);
 queue.enqueue(2);
 queue.enqueue(6);
 queue.enqueue(9);
+console.log(queue.toString());
+console.log(queue.dequeue());
+console.log(queue.dequeue());
+console.log(queue.dequeue());
 console.log(queue.toString());
