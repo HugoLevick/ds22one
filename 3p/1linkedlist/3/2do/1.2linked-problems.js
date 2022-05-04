@@ -162,12 +162,7 @@ class Stack {
   }
 }
 
-let head = new ListNode(2);
-let node1 = new ListNode(5);
-head.next = node1;
-let node2 = new ListNode("a");
-node1.next = node2;
-let list = new LinkedList(head);
+let list = new LinkedList();
 
 let queue = new Queue();
 queue.enqueue(2);
