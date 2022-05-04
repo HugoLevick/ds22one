@@ -87,16 +87,12 @@ class Queue {
   }
 
   dequeue() {
-    if (this.list.size > 1) {
-      let secondToLast = this.list.traverse(this.list.size - 1);
-      let last = secondToLast.next;
-      secondToLast.next = null;
-      return last.data;
-    } else if (this.front) {
-      let data = this.front;
-      this.empty();
-      return data;
-    } else return null;
+    let first = this.list.getFirst();
+    if (first) {
+      this.list.head = first.next;
+      return first.data;
+    }
+    return null;
   }
 
   toString() {
@@ -124,6 +120,48 @@ class Queue {
   }
 }
 
+class Stack {
+  constructor() {
+    this.list = new LinkedList();
+  }
+  push(v) {
+    this.list.append(new ListNode(v));
+  }
+
+  pop() {
+    if (this.list.size > 1) {
+      let secondToLast = this.list.traverse(this.list.size - 1);
+      let last = secondToLast.next;
+      secondToLast.next = null;
+      return last.data;
+    } else if (this.peek()) {
+      let data = this.peek();
+      this.empty();
+      return data;
+    } else return null;
+  }
+
+  peek() {
+    let last = this.list.getLast();
+    return last ? last.data : null;
+  }
+
+  toString() {
+    let str = "";
+    let node = this.list.getFirst();
+    let back = this.list.getLast();
+    while (node) {
+      str += `${node.data}${back == node ? "." : ", "}`;
+      node = node.next;
+    }
+    return str ? str : null;
+  }
+
+  empty() {
+    this.list.clear();
+  }
+}
+
 let head = new ListNode(2);
 let node1 = new ListNode(5);
 head.next = node1;
@@ -131,7 +169,7 @@ let node2 = new ListNode("a");
 node1.next = node2;
 let list = new LinkedList(head);
 
-let queue = new Queue(list);
+let queue = new Queue();
 queue.enqueue(2);
 queue.enqueue(6);
 queue.enqueue(9);
@@ -140,3 +178,15 @@ console.log(queue.dequeue());
 console.log(queue.dequeue());
 console.log(queue.dequeue());
 console.log(queue.toString());
+
+let stack = new Stack();
+stack.push(1);
+stack.push(2);
+stack.push(3);
+console.log(stack.toString());
+console.log(stack.pop());
+console.log(stack.toString());
+console.log(stack.pop());
+console.log(stack.toString());
+console.log(stack.pop());
+console.log(stack.toString());
