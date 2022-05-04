@@ -78,20 +78,25 @@ class ListNode {
 }
 
 class Queue {
-  constructor(list) {
-    this.list = list;
-    this.size = list.size;
+  constructor() {
+    this.list = new LinkedList();
   }
 
   enqueue(v) {
-    this.list.append(v);
+    this.list.append(new ListNode(v));
   }
 
   dequeue() {
-    let secondToLast = this.list.traverse(this.size - 1);
-    let last = secondToLast.next;
-    secondToLast.next = null;
-    return last;
+    if (this.list.size > 1) {
+      let secondToLast = this.list.traverse(this.list.size - 1);
+      let last = secondToLast.next;
+      secondToLast.next = null;
+      return last.data;
+    } else if (this.front) {
+      let data = this.front.data;
+      this.empty();
+      return data;
+    } else return null;
   }
 
   toString() {
@@ -126,8 +131,7 @@ node1.next = node2;
 let list = new LinkedList(head);
 
 let queue = new Queue(list);
-queue.empty();
-queue.enqueue(head);
-console.log(queue.front);
-queue.enqueue(new ListNode(6));
-console.log(queue.front);
+queue.enqueue(2);
+queue.enqueue(6);
+queue.enqueue(9);
+console.log(queue.toString());
