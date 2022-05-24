@@ -58,6 +58,10 @@ class LinkedList {
   getFirst() {
     return this.head;
   }
+
+  insert(node) {
+    this.getLast().next = node;
+  }
 }
 
 class ListNode {

@@ -162,8 +162,6 @@ class Stack {
   }
 }
 
-let list = new LinkedList();
-
 let queue = new Queue();
 queue.enqueue(2);
 queue.enqueue(6);
