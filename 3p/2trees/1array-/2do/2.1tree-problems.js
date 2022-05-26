@@ -16,6 +16,14 @@ class Node {
     this.data = data;
     this.children = [];
   }
+
+  toString() {
+    let str = `${this.data} => `;
+    this.children.forEach((child) => {
+      str += child.data + " ";
+    });
+    return str;
+  }
 }
 
 class Tree {
@@ -33,7 +41,7 @@ class Tree {
       if (!this.root) {
         this.root = node;
       } else {
-        return "error 1";
+        return "error";
       }
     }
   }
@@ -67,10 +75,11 @@ class Tree {
 }
 
 let tree = new Tree();
-tree.add("1");
-tree.add("2", "1");
+tree.add("1"); // Add node
+tree.add("2", "1"); // Add node and its parent tree.add(data, parent)
 tree.add("3", "1");
-tree.add("4", "2");
+tree.add("4", "1");
 tree.add("5", "2");
-tree.add("6", "3");
-tree.traverseBFS((node) => console.log(node));
+tree.add("6", "2");
+tree.add("7", "3");
+tree.traverseBFS((node) => console.log(node.toString())); //Prints each node and its children
