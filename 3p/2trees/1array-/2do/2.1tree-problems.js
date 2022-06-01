@@ -75,11 +75,9 @@ class Tree {
 }
 
 let tree = new Tree();
-tree.add("1"); // Add node
-tree.add("2", "1"); // Add node and its parent tree.add(data, parent)
-tree.add("3", "1");
-tree.add("4", "1");
-tree.add("5", "2");
-tree.add("6", "2");
-tree.add("7", "3");
+tree.add("A"); // Add node
+tree.add("B", "A"); // Add node and its parent tree.add(data, parent)
+tree.add("C", "A");
+tree.add("D", "B");
+tree.add("E", "B");
 tree.traverseBFS((node) => console.log(node.toString())); //Prints each node and its children
